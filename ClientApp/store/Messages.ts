@@ -9,10 +9,10 @@ export interface MessagesState {
 }
 
 export interface Message {
-    Id: number,
-    EmailDate: string,
-    FromAddress: string,
-    Subject: string,
+    id: number,
+    emailDate: string,
+    fromAddress: string,
+    subject: string,
 }
 
 interface RequestMessagesAction {
@@ -30,7 +30,6 @@ export const actionCreators = {
     requestMessages: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
         if (getState().messages.messages.length == 0) {
             let fetchTask = MessageApi.getNextTenMessages()
-                .then(response => response as Promise<Message[]>)
                 .then(data => {
                     dispatch({ type: 'RECEIVE_MESSAGES', messages: data as Message[] });
                 });

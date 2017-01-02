@@ -26,6 +26,10 @@ class MessagePage extends React.Component<MessagesProps, void> {
         </div>;
     }
 
+    private alertHello(){
+        alert('Hello');
+    }
+
     private renderForecastsTable() {
         return <table className='table'>
             <thead>
@@ -38,11 +42,11 @@ class MessagePage extends React.Component<MessagesProps, void> {
             </thead>
             <tbody>
             {this.props.messages.map(message =>
-                <tr key={ message.Id }>
-                    <td>{ message.Id }</td>
-                    <td>{ message.EmailDate }</td>
-                    <td>{ message.FromAddress }</td>
-                    <td>{ message.Subject }</td>
+                <tr key={ message.id } onDoubleClick={this.alertHello}>
+                    <td>{ message.id }</td>
+                    <td>{ message.emailDate }</td>
+                    <td>{ message.fromAddress }</td>
+                    <td>{ message.subject }</td>
                 </tr>
             )}
             </tbody>

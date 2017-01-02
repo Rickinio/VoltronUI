@@ -1,26 +1,25 @@
+import { fetch } from 'domain-task';
 import * as MessageState from '../store/Messages';
 
-const messages = [
-    {
-        Id: 1,
-        EmailDate: "30/12/2016",
-        FromAddress: "howerob.com",
-        Subject: "Vlcc Report"
-    },
-    {
-        Id: 2,
-        EmailDate: "31/12/2016",
-        FromAddress: "icap.com",
-        Subject: "Vlcc Evening Report"
-    }
-]
-
 class MessageApi {
-    static getNextTenMessages() {
+
+    static getNextTenMessages():Promise<MessageState.Message[]> {
+        return new Promise((resolve, reject) => {
+            fetch('/api/MockData/GetMessages')
+            .then(response=> response.json() as Promise<MessageState.Message[]>)
+            .then(data=>resolve(data))
+            .catch(error=> reject(error))
+        });
+    }
+
+    static getParsedText() {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                resolve(Object.assign([], messages));
-            }, 2000);
+                resolve(`line111111111111111111
+                        line222222222222222
+                        line33333333333333333
+                        `);
+            }, 2000)
         });
     }
 }
