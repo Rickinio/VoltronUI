@@ -1,12 +1,18 @@
 import { fetch } from 'domain-task';
 import * as MessageState from '../store/Messages';
 
+const ScrapedData = {
+    vessel:"Theofilos",
+    loading:"Rastanura",
+    isPartial:true
+}
+
 class MessageApi {
 
-    static getNextTenMessages():Promise<MessageState.Message[]> {
+    static getNextTenMessages():Promise<MessageState.IMessage[]> {
         return new Promise((resolve, reject) => {
             fetch('/api/MockData/GetMessages')
-            .then(response=> response.json() as Promise<MessageState.Message[]>)
+            .then(response=> response.json() as Promise<MessageState.IMessage[]>)
             .then(data=>resolve(data))
             .catch(error=> reject(error))
         });
@@ -22,6 +28,15 @@ class MessageApi {
             }, 2000)
         });
     }
+
+    static getScrapedData(){
+        return new Promise((resolve,reject)=>{
+            setTimeout(()=>{
+                resolve(ScrapedData);
+            },1000)
+        });
+    }
+
 }
 
 export default MessageApi;

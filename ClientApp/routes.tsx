@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Router, Route, HistoryBase } from 'react-router';
 import { Layout } from './components/Layout';
-import MessagePage from './components/MessagePage';
+import MessagePage from './components/messages/MessagePage';
 
 export default <Route component={ Layout }>
     <Route path='/' components={{ body: MessagePage }} />

@@ -3,16 +3,26 @@ import { Action, Reducer, ThunkAction, ActionCreator } from 'redux';
 import { AppThunkAction } from './';
 import MessageApi from '../api/mockMessageApi';
 
-export interface MessagesState {
+export interface IMessagePageState {
     isLoading: boolean,
-    messages: Message[]
+    messages: IMessage[],
+    selectedMessage: IMessage
 }
 
-export interface Message {
+export interface IMessage {
     id: number,
     emailDate: string,
     fromAddress: string,
     subject: string,
+    parsedText: string,
+    isSelected: boolean,
+    scrapedData: IScrapedData
+}
+
+export interface IScrapedData {
+    vessel: string,
+    loading: string,
+    isPartial: boolean
 }
 
 interface RequestMessagesAction {
@@ -21,39 +31,62 @@ interface RequestMessagesAction {
 
 interface ReceiveMessagesAction {
     type: 'RECEIVE_MESSAGES',
-    messages: Message[]
+    messages: IMessage[]
+    selectedMessage: IMessage
 }
 
-type KnownAction = RequestMessagesAction | ReceiveMessagesAction;
+interface GetScrapedDataAction {
+    type: 'GET_SCRAPED_DATA',
+    messages: IMessage[],
+    selectedMessage: IMessage
+}
+
+type KnownAction = RequestMessagesAction | ReceiveMessagesAction | GetScrapedDataAction;
 
 export const actionCreators = {
     requestMessages: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
         if (getState().messages.messages.length == 0) {
             let fetchTask = MessageApi.getNextTenMessages()
                 .then(data => {
-                    dispatch({ type: 'RECEIVE_MESSAGES', messages: data as Message[] });
+                    dispatch({ type: 'RECEIVE_MESSAGES', messages: data as IMessage[], selectedMessage: getState().messages.selectedMessage });
                 });
 
             addTask(fetchTask); // Ensure server-side prerendering waits for this to complete
             dispatch({ type: 'REQUEST_MESSAGES' });
         }
+    },
+    getScrapedData: (message: IMessage): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        let scrapedData = MessageApi.getScrapedData()
+            .then(data => {
+                let msgs: IMessage[] = getState().messages.messages;
+                let selectedMessage = msgs.filter((m) => m.id == message.id)[0];
+                let selectedMessageIndex = msgs.findIndex(m => m.id == message.id);
+                selectedMessage.scrapedData = data as IScrapedData
+                msgs.splice(selectedMessageIndex, 1, selectedMessage)
+                dispatch({ type: 'GET_SCRAPED_DATA', messages: msgs, selectedMessage: selectedMessage });
+            })
     }
 };
 
-const unloadedState: MessagesState = { messages: [], isLoading: false };
+const unloadedState: IMessagePageState = { messages: [], isLoading: false, selectedMessage: {} as IMessage };
 
-export const reducer: Reducer<MessagesState> = (state: MessagesState, action: KnownAction) => {
+export const reducer: Reducer<IMessagePageState> = (state: IMessagePageState, action: KnownAction) => {
     switch (action.type) {
         case 'REQUEST_MESSAGES':
-            return {
-                messages: state.messages,
-                isLoading: true
-            };
+            return Object.assign({} as IMessagePageState, state, {
+                isLoading: true,
+            });
         case 'RECEIVE_MESSAGES':
-            return {
+            return Object.assign({} as IMessagePageState, state, {
+                isLoading: false,
+                messages: action.messages
+            });
+        case 'GET_SCRAPED_DATA':
+            return Object.assign({} as IMessagePageState, state, {
                 messages: action.messages,
-                isLoading: false
-            };
+                isLoading: false,
+                selectedMessage: action.selectedMessage
+            });
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above
             const exhaustiveCheck: never = action;

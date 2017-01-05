@@ -6,5 +6,6 @@ namespace VoltronUI.ViewModels
         public string EmailDate { get; set; }
         public string FromAddress { get; set; }
         public string Subject { get; set; }
+        public string ParsedText{get;set;}
     }
 }
