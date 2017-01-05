@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "e85e5874086bc1d50da0"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a02fde6ab20436e4cb4a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -1918,7 +1918,7 @@
 	};
 	
 	var _reactTransformHmr2 = (0, _reactTransformHmr4.default)({
-	    filename: 'C:/Users/k.stamatopoulos/Downloads/VoltronUI/ClientApp/components/Layout.tsx',
+	    filename: 'C:/Users/k.stamatopoulos/Documents/GitHub/VoltronUI/ClientApp/components/Layout.tsx',
 	    components: _components,
 	    locals: [module],
 	    imports: [React.default]
@@ -7537,7 +7537,7 @@
 	};
 	
 	var _reactTransformHmr2 = (0, _reactTransformHmr4.default)({
-	    filename: 'C:/Users/k.stamatopoulos/Downloads/VoltronUI/ClientApp/components/NavMenu.tsx',
+	    filename: 'C:/Users/k.stamatopoulos/Documents/GitHub/VoltronUI/ClientApp/components/NavMenu.tsx',
 	    components: _components,
 	    locals: [module],
 	    imports: [React.default]
@@ -7679,7 +7679,7 @@
 	};
 	
 	var _reactTransformHmr2 = (0, _reactTransformHmr4.default)({
-	    filename: 'C:/Users/k.stamatopoulos/Downloads/VoltronUI/ClientApp/components/messages/MessagePage.tsx',
+	    filename: 'C:/Users/k.stamatopoulos/Documents/GitHub/VoltronUI/ClientApp/components/messages/MessagePage.tsx',
 	    components: _components,
 	    locals: [module],
 	    imports: [React.default]
