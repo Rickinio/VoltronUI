@@ -1,6 +1,6 @@
 import { fetch, addTask } from 'domain-task';
 import { Action, Reducer, ThunkAction, ActionCreator } from 'redux';
-import { AppThunkAction } from './';
+import { AppAction } from './';
 import MessageApi from '../api/mockMessageApi';
 
 export interface IMessagePageState {
@@ -44,7 +44,7 @@ interface GetScrapedDataAction {
 type KnownAction = RequestMessagesAction | ReceiveMessagesAction | GetScrapedDataAction;
 
 export const actionCreators = {
-    requestMessages: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
+    requestMessages: (): AppAction<KnownAction> => (dispatch, getState) => {
         if (getState().messages.messages.length == 0) {
             let fetchTask = MessageApi.getNextTenMessages()
                 .then(data => {
@@ -55,7 +55,7 @@ export const actionCreators = {
             dispatch({ type: 'REQUEST_MESSAGES' });
         }
     },
-    getScrapedData: (message: IMessage): AppThunkAction<KnownAction> => (dispatch, getState) => {
+    getScrapedData: (message: IMessage): AppAction<KnownAction> => (dispatch, getState) => {
         let scrapedData = MessageApi.getScrapedData()
             .then(data => {
                 let msgs: IMessage[] = getState().messages.messages;
