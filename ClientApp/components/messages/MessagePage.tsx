@@ -27,13 +27,12 @@ class MessagePage extends React.Component<IMessagesProps, IMessageState> {
         this.getScrapedData = this.getScrapedData.bind(this);
     }
 
-    componentWillMount() {
+    protected componentWillMount():void {
         this.props.requestMessages();
         this.setState({ selectedMessage: Object.assign({}, this.props.selectedMessage) });
     }
 
-    componentWillReceiveProps(nextProps: IMessagesProps) {
-        //this.props.requestMessages();
+    protected componentWillReceiveProps(nextProps: IMessagesProps):void {
         this.setState({ selectedMessage: Object.assign({}, nextProps.selectedMessage) });
     }
 

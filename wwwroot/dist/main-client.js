@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a02fde6ab20436e4cb4a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f54c99b34e5bc86d4872"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -7717,7 +7717,6 @@
 	    }, {
 	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps(nextProps) {
-	            //this.props.requestMessages();
 	            this.setState({ selectedMessage: Object.assign({}, nextProps.selectedMessage) });
 	        }
 	    }, {
